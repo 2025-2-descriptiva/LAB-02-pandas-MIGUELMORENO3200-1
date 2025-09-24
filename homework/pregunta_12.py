@@ -4,6 +4,12 @@ datos requeridos se encuentran en los archivos `tbl0.tsv`, `tbl1.tsv` y
 `tbl2.tsv`. En este laboratorio solo puede utilizar las funciones y 
 librerias de pandas para resolver las preguntas.
 """
+from unittest import result
+import pandas as pd 
+
+df0 = pd.read_csv("files/input/tbl0.tsv", sep="\t")
+df1 = pd.read_csv("files/input/tbl1.tsv", sep="\t")
+df2 = pd.read_csv("files/input/tbl2.tsv", sep="\t")
 
 
 def pregunta_12():
@@ -22,3 +28,11 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
+    # Crear la columna c5
+    df2['c5'] = df2['c5a'].astype(str) + ':' + df2['c5b'].astype(str)
+    # Agrupar por c0, unir los valores de c5 y convertir a DataFrame
+    result = df2.groupby('c0')['c5'].apply(lambda x: ','.join(sorted(x))).to_frame().reset_index()
+    
+    return result
+
+print(pregunta_12())
